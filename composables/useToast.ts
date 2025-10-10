@@ -1,45 +1,78 @@
-interface ToastOptions {
+import { reactive } from 'vue'
+
+export interface Toast {
+  id: string
+  type: 'success' | 'error' | 'warning' | 'info'
   title?: string
   message: string
-  type?: 'success' | 'error' | 'warning' | 'info'
   duration?: number
 }
 
+interface ToastState {
+  toasts: Toast[]
+}
+
+// Global reactive state
+export const toastState = reactive<{ toasts: Toast[] }>({
+  toasts: []
+})
+
+let toastIdCounter = 0
+
 export const useToast = () => {
-  const showToast = (options: ToastOptions) => {
-    const { message, type = 'info', duration = 3000 } = options
+  const showToast = (
+    type: 'success' | 'error' | 'warning' | 'info',
+    message: string,
+    title?: string,
+    duration: number = 4000
+  ) => {
+    const id = `toast-${++toastIdCounter}-${Date.now()}`
+    
+    const toast: Toast = {
+      id,
+      type,
+      title,
+      message,
+      duration
+    }
 
-    if (process.client) {
-      // Simple console-based toast for now
-      // You can replace this with a proper toast library like vue-toastification
-      const style = {
-        success: 'color: green; font-weight: bold;',
-        error: 'color: red; font-weight: bold;',
-        warning: 'color: orange; font-weight: bold;',
-        info: 'color: blue; font-weight: bold;'
-      }
+    toastState.toasts.push(toast)
 
-      console.log(`%c${type.toUpperCase()}: ${message}`, style[type])
+    // Auto remove after duration
+    if (duration > 0) {
+      setTimeout(() => {
+        removeToast(id)
+      }, duration)
+    }
 
-      // You can implement a custom toast UI here
-      // For now, this is a placeholder
+    return id
+  }
+
+  const removeToast = (id: string) => {
+    const index = toastState.toasts.findIndex(t => t.id === id)
+    if (index !== -1) {
+      toastState.toasts.splice(index, 1)
     }
   }
 
-  const success = (message: string, title?: string) => {
-    showToast({ message, title, type: 'success' })
+  const success = (message: string, title?: string, duration?: number) => {
+    return showToast('success', message, title, duration)
   }
 
-  const error = (message: string, title?: string) => {
-    showToast({ message, title, type: 'error' })
+  const error = (message: string, title?: string, duration?: number) => {
+    return showToast('error', message, title, duration)
   }
 
-  const warning = (message: string, title?: string) => {
-    showToast({ message, title, type: 'warning' })
+  const warning = (message: string, title?: string, duration?: number) => {
+    return showToast('warning', message, title, duration)
   }
 
-  const info = (message: string, title?: string) => {
-    showToast({ message, title, type: 'info' })
+  const info = (message: string, title?: string, duration?: number) => {
+    return showToast('info', message, title, duration)
+  }
+
+  const clear = () => {
+    toastState.toasts = []
   }
 
   return {
@@ -47,7 +80,9 @@ export const useToast = () => {
     success,
     error,
     warning,
-    info
+    info,
+    removeToast,
+    clear
   }
 }
 

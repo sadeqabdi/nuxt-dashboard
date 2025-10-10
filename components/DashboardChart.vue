@@ -2,7 +2,7 @@
   <div class="card">
     <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ title }}</h3>
     <div class="relative h-64">
-      <canvas ref="chartCanvas"></canvas>
+      <canvas ref="chartCanvas"/>
     </div>
   </div>
 </template>

@@ -36,3 +36,27 @@ export interface ChartData {
   }[]
 }
 
+export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+
+export interface OrderItem {
+  id: number
+  name: string
+  quantity: number
+  price: number
+}
+
+export interface Order {
+  id: number
+  userId: number
+  userName: string
+  userEmail: string
+  userAvatar?: string
+  items: OrderItem[]
+  totalAmount: number
+  status: OrderStatus
+  createdAt: string
+  updatedAt: string
+  shippingAddress?: string
+  notes?: string
+}
+

@@ -2,24 +2,30 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const authStore = useAuthStore()
 
   // Check if user is authenticated on client side
-  if (process.client && !authStore.isAuthenticated) {
+  if (import.meta.client && !authStore.isAuthenticated) {
     await authStore.checkAuth()
   }
 
+  // Redirect root to login or dashboard based on auth status
+  if (to.path === '/') {
+    if (authStore.token) {
+      return navigateTo('/dashboard')
+    } else {
+      return navigateTo('/auth/login')
+    }
+  }
+
   // Public routes that don't require authentication
-  const publicRoutes = ['/auth/login', '/login', '/register', '/forgot-password', '/']
+  const publicRoutes = ['/auth/login', '/login', '/register', '/forgot-password']
   const isPublicRoute = publicRoutes.includes(to.path)
 
   // If token is missing → redirect to /auth/login
-  // Exception: Allow root path (/) for testing dashboard
-  if (!isPublicRoute && !authStore.token && to.path !== '/') {
+  if (!isPublicRoute && !authStore.token) {
     return navigateTo('/auth/login')
   }
 
-  // If token exists → allow route access
-  // If authenticated user tries to access login page, redirect to dashboard
-  // Exception: Don't redirect from root path
-  if (isPublicRoute && authStore.token && to.path === '/auth/login') {
+  // If token exists and trying to access login → redirect to dashboard
+  if (authStore.token && to.path === '/auth/login') {
     return navigateTo('/dashboard')
   }
 })

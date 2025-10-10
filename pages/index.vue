@@ -39,7 +39,7 @@
 
     <!-- Loading State -->
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      <div v-for="i in 4" :key="i" class="card h-32 animate-pulse bg-gray-200 dark:bg-gray-700"></div>
+      <div v-for="i in 4" :key="i" class="card h-32 animate-pulse bg-gray-200 dark:bg-gray-700"/>
     </div>
 
     <!-- Charts Grid -->

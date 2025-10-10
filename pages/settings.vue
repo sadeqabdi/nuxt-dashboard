@@ -13,9 +13,9 @@
             <button
               v-for="tab in tabs"
               :key="tab.id"
-              @click="activeTab = tab.id"
               class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors"
               :class="activeTab === tab.id ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+              @click="activeTab = tab.id"
             >
               <component :is="tab.icon" class="w-5 h-5" />
               <span>{{ tab.name }}</span>
@@ -29,7 +29,7 @@
         <!-- Profile Settings -->
         <div v-if="activeTab === 'profile'" class="card">
           <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Profile Settings</h2>
-          <form @submit.prevent="saveProfile" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="saveProfile">
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Full Name
@@ -39,7 +39,7 @@
                 type="text"
                 class="input-field"
                 placeholder="Enter your name"
-              />
+              >
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -50,7 +50,7 @@
                 type="email"
                 class="input-field"
                 placeholder="Enter your email"
-              />
+              >
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -61,7 +61,7 @@
                 type="url"
                 class="input-field"
                 placeholder="Enter avatar URL"
-              />
+              >
             </div>
             <button type="submit" class="btn-primary">
               Save Changes
@@ -79,17 +79,17 @@
               </label>
               <div class="flex gap-4">
                 <button
-                  @click="themeStore.setTheme(false)"
                   class="flex-1 p-4 border-2 rounded-lg transition-colors"
                   :class="!themeStore.isDark ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/20' : 'border-gray-300 dark:border-gray-600'"
+                  @click="themeStore.setTheme(false)"
                 >
                   <div class="text-2xl mb-2">☀️</div>
                   <div class="font-medium">Light</div>
                 </button>
                 <button
-                  @click="themeStore.setTheme(true)"
                   class="flex-1 p-4 border-2 rounded-lg transition-colors"
                   :class="themeStore.isDark ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/20' : 'border-gray-300 dark:border-gray-600'"
+                  @click="themeStore.setTheme(true)"
                 >
                   <div class="text-2xl mb-2">🌙</div>
                   <div class="font-medium">Dark</div>
@@ -102,7 +102,7 @@
         <!-- Security Settings -->
         <div v-if="activeTab === 'security'" class="card">
           <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Security Settings</h2>
-          <form @submit.prevent="changePassword" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="changePassword">
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Current Password
@@ -112,7 +112,7 @@
                 type="password"
                 class="input-field"
                 placeholder="Enter current password"
-              />
+              >
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -123,7 +123,7 @@
                 type="password"
                 class="input-field"
                 placeholder="Enter new password"
-              />
+              >
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -134,7 +134,7 @@
                 type="password"
                 class="input-field"
                 placeholder="Confirm new password"
-              />
+              >
             </div>
             <button type="submit" class="btn-primary">
               Change Password
@@ -151,21 +151,21 @@
                 <div class="font-medium text-gray-900 dark:text-white">Email Notifications</div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">Receive email updates</div>
               </div>
-              <input type="checkbox" v-model="notificationForm.email" class="toggle" />
+              <input v-model="notificationForm.email" type="checkbox" class="toggle" >
             </div>
             <div class="flex items-center justify-between">
               <div>
                 <div class="font-medium text-gray-900 dark:text-white">Push Notifications</div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">Receive push notifications</div>
               </div>
-              <input type="checkbox" v-model="notificationForm.push" class="toggle" />
+              <input v-model="notificationForm.push" type="checkbox" class="toggle" >
             </div>
             <div class="flex items-center justify-between">
               <div>
                 <div class="font-medium text-gray-900 dark:text-white">SMS Notifications</div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">Receive SMS updates</div>
               </div>
-              <input type="checkbox" v-model="notificationForm.sms" class="toggle" />
+              <input v-model="notificationForm.sms" type="checkbox" class="toggle" >
             </div>
           </div>
         </div>

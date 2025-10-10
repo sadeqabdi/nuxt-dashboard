@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <form @submit.prevent="handleSubmit" class="space-y-6">
+        <form class="space-y-6" @submit.prevent="handleSubmit">
           <!-- Email Field -->
           <div>
             <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -49,7 +49,7 @@
                 :class="{ 'border-red-500 focus:ring-red-500': errors.email }"
                 placeholder="you@example.com"
                 @blur="validateEmail"
-              />
+              >
             </div>
             <p v-if="errors.email" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.email }}</p>
           </div>
@@ -74,7 +74,7 @@
                 :class="{ 'border-red-500 focus:ring-red-500': errors.password }"
                 placeholder="Enter your password"
                 @blur="validatePassword"
-              />
+              >
             </div>
             <p v-if="errors.password" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.password }}</p>
           </div>
@@ -87,7 +87,7 @@
                 v-model="form.rememberMe"
                 type="checkbox"
                 class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
-              />
+              >
               <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
                 Remember me
               </label>
@@ -109,8 +109,8 @@
               <span v-if="!loading">Sign in</span>
               <span v-else class="flex items-center">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                 </svg>
                 Signing in...
               </span>
@@ -122,7 +122,7 @@
         <div class="mt-6">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+              <div class="w-full border-t border-gray-300 dark:border-gray-600"/>
             </div>
             <div class="relative flex justify-center text-sm">
               <span class="px-3 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-medium">
@@ -158,14 +158,21 @@
 </template>
 
 <script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useAuthStore } from '../../stores/auth'
+import { useToast } from '../../composables/useToast'
+import { useLoader } from '../../composables/useLoader'
+
 // Disable layout and middleware for this page
 definePageMeta({
   layout: false,
   middleware: []
 })
 
-// Store
+// Store and composables
 const authStore = useAuthStore()
+const { success, error: showError } = useToast()
+const loader = useLoader()
 
 // Form state
 const form = reactive({
@@ -225,30 +232,36 @@ const handleSubmit = async () => {
   
   // Validate fields
   if (!validateForm()) {
+    showError('Please fix the validation errors')
     return
   }
 
   // Set loading state
   loading.value = true
+  loader.show('Logging in...')
 
   try {
     // Call login action from store
     const result = await authStore.login(form.email, form.password)
 
     if (result.success) {
-      // Success - redirect to dashboard
+      // Success - show toast and redirect
+      success('Login successful! Redirecting...', 'Welcome Back')
       await navigateTo('/dashboard')
     } else {
       // Show error message
       errorMessage.value = result.message || 'Invalid email or password. Please try again.'
+      showError(result.message || 'Invalid email or password', 'Login Failed')
     }
   } catch (error: any) {
     // Handle unexpected errors
     errorMessage.value = error.message || 'An unexpected error occurred. Please try again.'
+    showError(error.message || 'An unexpected error occurred', 'Error')
     console.error('Login error:', error)
   } finally {
     // Reset loading state
     loading.value = false
+    loader.hide()
   }
 }
 </script>

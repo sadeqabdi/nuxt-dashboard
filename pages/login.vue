@@ -28,7 +28,7 @@
               required
               class="input-field"
               placeholder="Enter your email"
-            />
+            >
           </div>
 
           <div>
@@ -42,7 +42,7 @@
               required
               class="input-field"
               placeholder="Enter your password"
-            />
+            >
           </div>
         </div>
 
@@ -53,7 +53,7 @@
               v-model="form.remember"
               type="checkbox"
               class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-            />
+            >
             <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
               Remember me
             </label>
@@ -75,8 +75,8 @@
             <span v-if="!loading">Sign in</span>
             <span v-else class="flex items-center">
               <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
               </svg>
               Signing in...
             </span>
@@ -94,7 +94,7 @@
       <div class="mt-6">
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+            <div class="w-full border-t border-gray-300 dark:border-gray-600"/>
           </div>
           <div class="relative flex justify-center text-sm">
             <span class="px-2 bg-gray-50 dark:bg-gray-900 text-gray-500">Demo Credentials</span>
@@ -102,7 +102,7 @@
         </div>
         <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <p class="text-sm text-blue-800 dark:text-blue-300">
-            <strong>Email:</strong> admin@example.com<br />
+            <strong>Email:</strong> admin@example.com<br >
             <strong>Password:</strong> any password
           </p>
         </div>

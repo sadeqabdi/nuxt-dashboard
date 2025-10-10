@@ -45,7 +45,7 @@ export const useAuthStore = defineStore('auth', {
         this.isAuthenticated = true
 
         // Save token in localStorage
-        if (process.client) {
+        if (import.meta.client) {
           localStorage.setItem('auth_token', token)
           localStorage.setItem('user', JSON.stringify(user))
         }
@@ -64,7 +64,7 @@ export const useAuthStore = defineStore('auth', {
       this.isAuthenticated = false
 
       // Remove from localStorage
-      if (process.client) {
+      if (import.meta.client) {
         localStorage.removeItem('auth_token')
         localStorage.removeItem('user')
       }
@@ -76,16 +76,16 @@ export const useAuthStore = defineStore('auth', {
     // Required action: setUser()
     setUser(user: User | null) {
       this.user = user
-      if (user && process.client) {
+      if (user && import.meta.client) {
         localStorage.setItem('user', JSON.stringify(user))
-      } else if (process.client) {
+      } else if (import.meta.client) {
         localStorage.removeItem('user')
       }
     },
 
     // Additional helper action for checking authentication
     async checkAuth() {
-      if (process.client) {
+      if (import.meta.client) {
         const token = localStorage.getItem('auth_token')
         const userStr = localStorage.getItem('user')
 
