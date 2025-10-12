@@ -137,6 +137,7 @@
 
     <!-- User Modal -->
     <UserModal
+      :key="modalKey"
       :is-open="isModalOpen"
       :user="selectedUser"
       :loading="usersStore.loading"
@@ -202,6 +203,8 @@ import type { User } from '../types'
 import { useUsersStore } from '../stores/users'
 import { useToast } from '../composables/useToast'
 import { useLoader } from '../composables/useLoader'
+import UserModal from '../components/users/UserModal.vue'
+import UserTable from '../components/users/UserTable.vue'
 
 const usersStore = useUsersStore()
 const toast = useToast()
@@ -221,6 +224,7 @@ const isModalOpen = ref(false)
 const selectedUser = ref<User | null>(null)
 const showDeleteConfirm = ref(false)
 const userToDelete = ref<User | null>(null)
+const modalKey = ref(0)
 
 // Search
 const searchQuery = computed({
@@ -244,11 +248,13 @@ const previousPage = () => {
 // Modal actions
 const openAddModal = () => {
   selectedUser.value = null
+  modalKey.value++
   isModalOpen.value = true
 }
 
 const openEditModal = (user: User) => {
   selectedUser.value = user
+  modalKey.value++
   isModalOpen.value = true
 }
 

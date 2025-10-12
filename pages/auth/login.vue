@@ -1,5 +1,10 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Theme Toggle -->
+    <div class="fixed top-4 right-4">
+      <ThemeToggle />
+    </div>
+
     <div class="max-w-md w-full">
       <!-- Header -->
       <div class="text-center mb-8">
@@ -136,7 +141,7 @@
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
               </svg>
               <div class="text-sm text-indigo-800 dark:text-indigo-300">
-                <p><strong>Email:</strong> admin@example.com</p>
+                <p><strong>Email:</strong> john@example.com</p>
                 <p><strong>Password:</strong> password123</p>
               </div>
             </div>
@@ -158,15 +163,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useToast } from '../../composables/useToast'
 import { useLoader } from '../../composables/useLoader'
+import { useThemeStore } from '../../stores/theme'
 
 // Disable layout and middleware for this page
 definePageMeta({
   layout: false,
   middleware: []
+})
+
+// Initialize theme on mount
+const themeStore = useThemeStore()
+onMounted(() => {
+  themeStore.initTheme()
 })
 
 // Store and composables

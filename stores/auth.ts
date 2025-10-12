@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { User, AuthState } from '~/types'
+import { useUsersStore } from './users'
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
@@ -21,38 +22,44 @@ export const useAuthStore = defineStore('auth', {
     // Required action: login()
     async login(email: string, password: string) {
       try {
-        // Simulate API call - replace with actual API call
-        await new Promise(resolve => setTimeout(resolve, 1000))
-
-        // Mock validation (accept any password for demo)
-        // In production, the API would validate credentials
+        // Get users store to validate credentials
+        const usersStore = useUsersStore()
         
-        // Mock user data
-        const user: User = {
-          id: 1,
-          name: 'John Doe',
-          email: email,
-          role: 'admin',
-          avatar: 'https://ui-avatars.com/api/?name=John+Doe'
+        // Ensure users are loaded
+        if (usersStore.users.length === 0) {
+          await usersStore.fetchUsers()
+        }
+
+        // Find user by email
+        const foundUser = usersStore.users.find(u => u.email.toLowerCase() === email.toLowerCase())
+        
+        if (!foundUser) {
+          return { success: false, message: 'Invalid email or password' }
+        }
+
+        // Validate password (using "password123" as default for all users)
+        // In production, each user would have their own hashed password
+        if (password !== 'password123') {
+          return { success: false, message: 'Invalid email or password' }
         }
 
         // Generate mock token
         const token = 'mock-jwt-token-' + Date.now()
 
-        // Update state
-        this.user = user
+        // Update state with actual user data
+        this.user = foundUser
         this.token = token
         this.isAuthenticated = true
 
         // Save token in localStorage
         if (import.meta.client) {
           localStorage.setItem('auth_token', token)
-          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('user', JSON.stringify(foundUser))
         }
 
         return { success: true, message: 'Login successful' }
       } catch (error) {
-        return { success: false, message: 'Login failed. Please check your credentials.' }
+        return { success: false, message: 'Login failed. Please try again.' }
       }
     },
 

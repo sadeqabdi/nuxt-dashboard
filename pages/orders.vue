@@ -48,18 +48,26 @@
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
               Filter by Status:
             </label>
-            <select
-              v-model="ordersStore.statusFilter"
-              class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              @change="ordersStore.setPage(1)"
-            >
-              <option value="all">All Orders</option>
-              <option value="pending">Pending</option>
-              <option value="processing">Processing</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
+            <div class="relative">
+              <select
+                v-model="ordersStore.statusFilter"
+                class="appearance-none px-4 py-2.5 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500"
+                @change="ordersStore.setPage(1)"
+              >
+                <option value="all" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">All Orders</option>
+                <option value="pending" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">Pending</option>
+                <option value="processing" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">Processing</option>
+                <option value="shipped" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">Shipped</option>
+                <option value="delivered" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">Delivered</option>
+                <option value="cancelled" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">Cancelled</option>
+              </select>
+              <!-- Custom Dropdown Icon -->
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           <!-- Reset Button -->
@@ -313,3 +321,31 @@ const getStatusIconClasses = (status: string) => {
   return statusMap[status] || 'text-gray-500'
 }
 </script>
+
+<style scoped>
+/* Better dropdown styling for dark mode */
+select option {
+  background-color: white;
+  color: #111827;
+  padding: 0.5rem;
+}
+
+:global(.dark) select option {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background: linear-gradient(0deg, #6366f1 0%, #6366f1 100%);
+  color: white;
+}
+
+:global(.dark) select option:hover,
+:global(.dark) select option:focus,
+:global(.dark) select option:checked {
+  background: linear-gradient(0deg, #6366f1 0%, #6366f1 100%);
+  color: white;
+}
+</style>

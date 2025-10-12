@@ -72,18 +72,26 @@
 
           <!-- Status -->
           <td class="px-6 py-4 whitespace-nowrap">
-            <select
-              :value="order.status"
-              :class="getStatusClasses(order.status)"
-              class="text-xs font-medium px-3 py-1.5 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2"
-              @change="(e) => $emit('status-change', order.id, (e.target as HTMLSelectElement).value)"
-            >
-              <option value="pending">Pending</option>
-              <option value="processing">Processing</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
+            <div class="relative inline-block">
+              <select
+                :value="order.status"
+                :class="getStatusClasses(order.status)"
+                class="appearance-none text-xs font-medium px-3 py-1.5 pr-8 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                @change="(e) => $emit('status-change', order.id, (e.target as HTMLSelectElement).value)"
+              >
+                <option value="pending" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Pending</option>
+                <option value="processing" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Processing</option>
+                <option value="shipped" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Shipped</option>
+                <option value="delivered" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Delivered</option>
+                <option value="cancelled" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Cancelled</option>
+              </select>
+              <!-- Dropdown Icon -->
+              <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </div>
+            </div>
           </td>
 
           <!-- Actions -->
@@ -159,3 +167,32 @@ const formatTime = (dateString: string) => {
 }
 </script>
 
+<style scoped>
+/* Better dropdown styling for status options */
+select option {
+  background-color: white;
+  color: #111827;
+  padding: 0.5rem;
+}
+
+:global(.dark) select option {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background: linear-gradient(0deg, #6366f1 0%, #6366f1 100%);
+  background-color: #6366f1;
+  color: white;
+}
+
+:global(.dark) select option:hover,
+:global(.dark) select option:focus,
+:global(.dark) select option:checked {
+  background: linear-gradient(0deg, #6366f1 0%, #6366f1 100%);
+  background-color: #6366f1;
+  color: white;
+}
+</style>
