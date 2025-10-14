@@ -1,10 +1,10 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  const authStore = useAuthStore()
-
-  // Check if user is authenticated on client side
-  if (import.meta.client && !authStore.isAuthenticated) {
-    await authStore.checkAuth()
+  // Only run on client side
+  if (!import.meta.client) {
+    return
   }
+
+  const authStore = useAuthStore()
 
   // Redirect root to login or dashboard based on auth status
   if (to.path === '/') {
@@ -29,4 +29,3 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo('/dashboard')
   }
 })
-
