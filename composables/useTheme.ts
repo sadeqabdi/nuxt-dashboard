@@ -1,12 +1,5 @@
 import { useThemeStore } from '~/stores/theme'
 
-/**
- * Composable for managing theme (dark/light mode)
- * Uses Composition API for reactive theme management
- * 
- * @example
- * const { isDark, theme, toggleTheme, setTheme } = useTheme()
- */
 export const useTheme = () => {
   const themeStore = useThemeStore()
 

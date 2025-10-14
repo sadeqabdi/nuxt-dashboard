@@ -24,6 +24,17 @@ export interface DashboardStats {
   activeProjects: number
   completedTasks: number
 }
+export interface Product {
+  id: number
+  name: string
+  description: string
+  price: number
+  stock: number
+  category: string
+  createdAt: string
+  updatedAt: string
+  image?: string
+}
 
 export interface ChartData {
   labels: string[]
@@ -40,9 +51,10 @@ export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | '
 
 export interface OrderItem {
   id: number
+  productId: number 
   name: string
   quantity: number
-  price: number
+  price: number 
 }
 
 export interface Order {

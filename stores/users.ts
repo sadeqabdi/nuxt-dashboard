@@ -141,6 +141,27 @@ export const useUsersStore = defineStore('users', {
             email: 'fiona@example.com',
             role: 'guest',
             avatar: 'https://ui-avatars.com/api/?name=Fiona+Green&background=84cc16&color=fff'
+          },
+          {
+            id: 9,
+            name: 'sadeq abdi',
+            email: 'sadeq@example.com',
+            role: 'user',
+            avatar: 'https://ui-avatars.com/api/?name=sadeq+abdi&background=10b981&color=fff'
+          },
+          {
+            id: 10,
+            name: 'shoaib manager',
+            email: 'shoaib@example.com',
+            role: 'user',
+            avatar: 'https://ui-avatars.com/api/?name=sadeq+abdi&background=10b981&color=fff'
+          },
+          {
+            id: 11,
+            name: 'saber valimohammadi',
+            email: 'saber@example.com',
+            role: 'user',
+            avatar: 'https://ui-avatars.com/api/?name=sadeq+abdi&background=10b981&color=fff'
           }
         ]
 

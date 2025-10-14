@@ -49,6 +49,16 @@
           </NuxtLink>
 
           <NuxtLink
+            to="/product"
+            class="sidebar-link"
+            :class="{ active: $route.path === '/product' }"
+            @click="closeSidebarOnMobile"
+          >
+            <CubeIcon class="w-5 h-5" />
+            <span>Products</span>
+          </NuxtLink>
+
+          <NuxtLink
             to="/profile"
             class="sidebar-link"
             :class="{ active: $route.path === '/profile' }"
@@ -246,7 +256,8 @@ import {
   Bars3Icon,
   XMarkIcon,
   ChevronDownIcon,
-  ArrowRightOnRectangleIcon
+  ArrowRightOnRectangleIcon,
+  CubeIcon  // ← این رو اضافه کن
 } from '@heroicons/vue/24/outline'
 
 const authStore = useAuthStore()
@@ -291,6 +302,7 @@ const pageTitle = computed(() => {
   if (path === '/dashboard') return 'Dashboard'
   if (path === '/users') return 'Users'
   if (path === '/orders') return 'Orders'
+  if (path === '/product') return 'Products'
   if (path === '/profile') return 'Profile'
   if (path === '/analytics') return 'Analytics'
   if (path === '/settings') return 'Settings'

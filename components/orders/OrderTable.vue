@@ -10,6 +10,9 @@
             User
           </th>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Products
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
             Amount
           </th>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -50,6 +53,23 @@
             </div>
           </td>
 
+          <!-- Products -->
+          <td class="px-6 py-4">
+            <div class="space-y-1">
+              <div 
+                v-for="item in order.items" 
+                :key="item.id"
+                class="flex items-center gap-2 text-sm"
+              >
+                <span class="text-gray-900 dark:text-gray-100 font-medium">
+                  {{ item.name }}
+                </span>
+                <span class="text-gray-500 dark:text-gray-400">
+                  (×{{ item.quantity }})
+                </span>
+              </div>
+            </div>
+          </td>
           <!-- Amount -->
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
@@ -122,6 +142,14 @@
 
 <script setup lang="ts">
 import type { Order, OrderStatus } from '~/types'
+import { useProductsStore } from '~/stores/product'
+
+const productsStore = useProductsStore()
+
+// Helper function
+const getProductInfo = (productId: number) => {
+  return productsStore.getProductById(productId)
+}
 
 interface Props {
   orders: Order[]
