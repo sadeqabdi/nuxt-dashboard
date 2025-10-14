@@ -19,14 +19,14 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Nuxt 3 Dashboard',
+      title: 'Doshboard Project',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Modern Nuxt 3 Dashboard with Tailwind CSS' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/jpeg', href: '/Shoaib.jpg' }
       ]
     }
   },
