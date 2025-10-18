@@ -15,7 +15,8 @@
     "format": "prettier --write \"**/*.{js,ts,vue,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,ts,vue,json,md}\"",
     "clean": "rm -rf .nuxt node_modules .output",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",

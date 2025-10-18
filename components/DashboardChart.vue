@@ -18,6 +18,20 @@ interface Props {
   data: ChartData
   type?: 'line' | 'bar' | 'doughnut' | 'pie'
 }
+const updateChartTheme = () => {
+  const isDark = themeStore.isDark
+}
+const updateChartData = () => {
+  const data = props.data
+  if (chartInstance) {
+    chartInstance.destroy()
+  }
+  chartInstance = new Chart(chartCanvas.value, {
+    type: props.type,
+    data: data,
+    options: options.value
+  })
+}
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'line'
